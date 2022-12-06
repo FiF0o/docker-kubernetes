@@ -10,9 +10,10 @@
     "express": "^4.17.1"
   },
   "scripts": {
-    "docker:build": "docker build -t feedback-node .",
-    "docker:run": "docker run -p 3010:8080 -d --name feedback-app --rm feedback-node",
-    "docker:stop": "docker stop feedback-app"
+    "docker:run": "docker run -p 3010:8080 -d --rm --name feedback-app -v feedback:/app/feedback feedback-node",
+    "docker:stop": "docker stop feedback-app",
+    "docker:image:build": "docker build -t feedback-node .",
+    "docker:image:delete": "docker rmi feedback-node"
 
   }
 }
