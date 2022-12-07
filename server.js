@@ -12,6 +12,9 @@ const Favorite = require('./models/favorite');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const PORT = process.env.PORT ? process.env.PORT : 8080
+const DB_HOST = process.env.DB_HOST ? process.env.DB_HOST : 'mongodb://localhost:27017/swfavorites'
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -116,13 +119,14 @@ mongoose.set('strictQuery', true);
 
 mongoose.connect(
   // from host machine as example for demo
-  'mongodb://localhost:27017/swfavorites',
+  DB_HOST,
   { useNewUrlParser: true },
   (err) => {
     if (err) {
       console.log(err);
     } else {
-      app.listen(process.env.PORT || 8080);
+      app.listen(PORT);
+      console.log(`app listening on port: ${PORT}`)
     }
   }
 );
