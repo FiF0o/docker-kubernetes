@@ -1,16 +1,21 @@
+/** 
+ * Playground app to containerise, not intended to he production code
+*/
 const fs = require('fs').promises;
 const exists = require('fs').exists;
 const path = require('path');
 const axios = require('axios');
+const mongoose = require('mongoose');
+
+const Favorite = require('./models/favorite');
 
 const express = require('express');
 const bodyParser = require('body-parser');
 
-console.log(process.env)
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
 app.use(express.static('public'));
 app.use('/feedback', express.static('feedback'));
@@ -46,11 +51,58 @@ app.post('/create', async (req, res) => {
   });
 });
 
-// starwars API
-app.get('/movies', async (req, res) => {
-  console.log({req})
+// uses starwars API 'for third parties' example 
+app.get('/favorites', async (req, res) => {
+  const favorites = await Favorite.find();
+  res.status(200).json({
+    favorites: favorites,
+  });
+});
+
+// curl --location --request POST 'localhost:8080/favorites' \
+// --header 'Content-Type: application/json' \
+// --data-raw '{
+//     "name": "foo",
+//     "type": "movie",
+//     "url": "http://swapi.dev/api/films/1"
+// }'
+app.post('/favorites', async (req, res) => {
+  const favName = req.body.name;
+  const favType = req.body.type;
+  const favUrl = req.body.url;
+
   try {
-    const response = await axios.get('https://swapi.dev/api/films/?format=json')
+    if (favType !== 'movie' && favType !== 'character') {
+      throw new Error('"type" should be "movie" or "character"!');
+    }
+    const existingFav = await Favorite.findOne({ name: favName });
+    if (existingFav) {
+      throw new Error('Favorite exists already!');
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+
+  const favorite = new Favorite({
+    name: favName,
+    type: favType,
+    url: favUrl,
+  });
+
+  try {
+    await favorite.save();
+    res
+      .status(201)
+      .json({ message: 'Favorite saved!', favorite: favorite.toObject() });
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong.' });
+  }
+});
+
+
+app.get('/movies', async (req, res) => {
+  try {
+    const response = await axios.get('https://swapi.dev/api/films')
     res.status(200).json({movies: response.data})
 
   }catch(e) {
@@ -59,5 +111,18 @@ app.get('/movies', async (req, res) => {
   }
 })
 
+// suppress deprecation warning
+mongoose.set('strictQuery', true);
 
-app.listen(process.env.PORT || 8080);
+mongoose.connect(
+  // from host machine as example for demo
+  'mongodb://localhost:27017/swfavorites',
+  { useNewUrlParser: true },
+  (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      app.listen(process.env.PORT || 8080);
+    }
+  }
+);
