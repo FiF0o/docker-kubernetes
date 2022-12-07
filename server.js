@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const exists = require('fs').exists;
 const path = require('path');
+const axios = require('axios');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -45,4 +46,18 @@ app.post('/create', async (req, res) => {
   });
 });
 
-app.listen(process.env.PORT);
+// starwars API
+app.get('/movies', async (req, res) => {
+  console.log({req})
+  try {
+    const response = await axios.get('https://swapi.dev/api/films/?format=json')
+    res.status(200).json({movies: response.data})
+
+  }catch(e) {
+    console.error(e)
+    res.status(500).json({message: 'ouch starwars API broken'})
+  }
+})
+
+
+app.listen(process.env.PORT || 8080);
