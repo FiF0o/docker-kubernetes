@@ -5,6 +5,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+console.log(process.env)
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,4 +45,4 @@ app.post('/create', async (req, res) => {
   });
 });
 
-app.listen(8080);
+app.listen(process.env.PORT);

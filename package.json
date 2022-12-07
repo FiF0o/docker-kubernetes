@@ -12,9 +12,12 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "docker:start": "docker run -p 3010:8080 -d --rm --name feedback-app -v feedback:/app/feedback -v $(pwd):/app:ro -v /app/node_modules feedback-node",
+    "docker:start": "docker run -p 3010:5000 --env-file ./.env --rm -d --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node",
     "docker:stop": "docker stop feedback-app",
     "docker:image:build": "docker build -t feedback-node .",
-    "docker:image:delete": "docker rmi feedback-node"
+    "docker:image:delete": "docker rmi feedback-node",
+    "docker:image:build:dev": "docker build -t feedback-node:dev --build-arg DEFAULT_PORT=9000 .",
+    "docker:start:dev": "echo 'from docker:image:build:dev with --build-arg' && docker run -p 3011:9000 --rm -d --name feedback-app-dev -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node:dev",
+    "docker:stop:dev": "docker stop feedback-app-dev"
   }
 }

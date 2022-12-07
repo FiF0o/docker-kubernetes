@@ -8,6 +8,11 @@ RUN npm i
 
 COPY . .
 
-EXPOSE 8080
+# env layers
+ARG DEFAULT_PORT=8080
+# Default PORT
+ENV PORT $DEFAULT_PORT
+
+EXPOSE $PORT
 
 CMD ["npm", "start"]
