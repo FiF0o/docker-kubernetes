@@ -1,11 +1,13 @@
 # Sample App - Docker k8
+Playground for Docker & Kubernetes which will contain multiple projects.
 
 ## Getting started
 
-`.env` file is required before running the project - `mv env .env`.
+For app1 `.env` file is required before running the project - `mv env .env`.
+By default the development will be pointing to the local machine and docker network -`favorites-net`- will be created on post install for the containers to connect.
 
 ## Deps
 
 - Nodejs
 - Docker
-- Mongodb ([installation](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-6.0-edition-edition))
+- Mongodb ([installation](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#installing-mongodb-6.0-edition-edition)) for local setup. `brew services start mongodb-community`
