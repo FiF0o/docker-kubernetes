@@ -15,15 +15,16 @@
   "scripts": {
     "start": "nodemon server.js",
     "dev": "npm run mongo:start && npm start",
-    "docker:debug": "docker run -p 3010:5000 --env-file ./.env --rm -it --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node sh",
-    "docker:start": "docker run -p 3010:5000 --env-file ./.env --rm -d --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node",
+    "docker:debug": "docker run -p 3010:5000 --env-file ./.env --network favorites-net --rm -it --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node sh",
+    "docker:start": "docker run -p 3010:5000 --env-file ./.env --network favorites-net --rm -d --name feedback-app -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node",
     "docker:stop": "docker stop feedback-app",
     "docker:image:build": "docker build -t feedback-node .",
     "docker:image:delete": "docker rmi feedback-node",
     "docker:image:build:dev": "docker build -t feedback-node:dev --build-arg DEFAULT_PORT=9000 .",
     "docker:start:dev": "echo 'from docker:image:build:dev with --build-arg' && docker run -p 3011:9000 --rm -d --name feedback-app-dev -v feedback:/app/feedback -v $(pwd):/app -v /app/node_modules feedback-node:dev",
     "docker:stop:dev": "docker stop feedback-app-dev",
-    "mongo:start": "brew services start mongodb-community@6.0",
-    "mongo:stop": "brew services stop mongodb-community@6.0"
+    "mongo:start": "docker run --rm -d --name mongodb --network favorites-net mongo && docker inspect mongodb | grep 'IPAddress'",
+    "mongo:stop": "docker stop mongodb",
+    "postinstall": "docker network create favorites-net && docker network ls"
   }
 }

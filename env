@@ -1,3 +1,4 @@
 PORT=
 # mongodb://host.docker.internal:27017/swfavorites
+# container name is domain, e.g. mongodb://mongodb:27017/swfavorites
 DB_HOST=

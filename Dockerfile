@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package.json .
 
+RUN npm set-script postinstall ""
+
 RUN npm i
 
 COPY . .
