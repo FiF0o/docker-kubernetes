@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "db:start": "docker run --name mongodb --rm -d --network goals-network mongo",
+    "db:start": "docker run --name mongodb -v data:/data/db --rm -d --network goals-network mongo",
     "db:stop": "docker stop mongodb",
     "docker:build": "docker build -t goals-node .",
     "docker:start": "docker run --name goals-backend --rm -d --network goals-network -p 80:80 goals-node",
