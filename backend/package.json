@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "db:start": "docker run --name mongodb --rm -d -p 27017:27017 mongo",
+    "db:start": "docker run --name mongodb --rm -d --network goals-network mongo",
     "db:stop": "docker stop mongodb",
     "docker:build": "docker build -t goals-node .",
-    "docker:start": "docker run --name goals-backend --rm -d -p 80:80 goals-node",
+    "docker:start": "docker run --name goals-backend --rm -d --network goals-network -p 80:80 goals-node",
     "docker:stop": "docker stop goals-backend"
   },
   "author": "Maximilian Schwarzmüller / Academind GmbH",

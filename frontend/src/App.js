@@ -39,6 +39,7 @@ function App() {
     setIsLoading(true);
 
     try {
+      // runs in browser, not executed in container, don't need the name container e.g goals-backend
       const response = await fetch('http://localhost/goals', {
         method: 'POST',
         body: JSON.stringify({
@@ -78,6 +79,7 @@ function App() {
     setIsLoading(true);
 
     try {
+      // runs in browser, not executed in container, don't need the name container e.g goals-backend
       const response = await fetch('http://localhost/goals/' + goalId, {
         method: 'DELETE',
       });
