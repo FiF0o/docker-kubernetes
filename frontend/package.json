@@ -17,7 +17,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docker:build": "docker build -t goals-react .",
-    "docker:start": "docker run --name goals-frontend --rm -p 3000:3000 -d goals-react",
+    "docker:start": "docker run --name goals-frontend -v $(pwd)/src:/app/src --rm -p 3000:3000 -d goals-react",
     "docker:stop": "docker stop goals-frontend"
   },
   "eslintConfig": {
