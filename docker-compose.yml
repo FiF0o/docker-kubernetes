@@ -1,0 +1,43 @@
+# https://docs.docker.com/compose/compose-file/
+version: "3.8"
+services:
+  mongodb:
+    image: "mongo"
+    volumes:
+      - data:/data/db
+    # environment:
+      # MONGO_INITDB_ROOT_USERNAME: ###
+    # env_file:
+      # - ./path/env/file
+    ## We will use default docker-compose network
+    # networks:
+      # - goals-network
+  backend:
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    # uses image and creates img for us
+    build: ./backend
+    ports:
+      - '80:80' 
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000' 
+    volumes:
+      - ./frontend/src:/app/src
+    # -it
+    # stdin_open: true
+    # tty: true
+    depends_on:
+      - backend
+volumes:
+  # only named volumes and no bind mount or anonymous volumes
+  data:
+  logs:
