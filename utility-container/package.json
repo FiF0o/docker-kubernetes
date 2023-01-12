@@ -1,0 +1,13 @@
+{
+  "name": "utility-container",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t node-util .",
+    "docker:run": "docker run -it -v $(pwd):/app node-util index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
