@@ -1,0 +1,23 @@
+{
+  "name": "docker-simple-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "docker:login": "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD} ",
+    "docker:build": "docker build -t node-dep-example .",
+    "docker:run:dev": "docker run -d --rm --name node-dep -p 80:80 node-dep-example",
+    "docker:run:prod": "echo 'run dockerhub image' && docker pull jonlazarini/node-dep-example && docker run -d --rm -p 80:80 jonlazarini/node-dep-example",
+    "docker:stop": "docker stop node-dep",
+    "docker:publish:tag": "docker tag node-dep-example jonlazarini/node-dep-example",
+    "docker:publish:push": "docker push jonlazarini/node-dep-example",
+    "docker:publish": "npm run docker:login && npm run docker:build && npm run docker:publish:tag && npm run docker:publish:push"
+  },
+  "author": "Maximilian Schwarzmüller / Academind GmbH",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
