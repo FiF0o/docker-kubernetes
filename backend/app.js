@@ -84,7 +84,8 @@ app.delete('/goals/:id', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://mongodb:27017/course-goals',
+  // default to localhost when on same network with k8, see dockerfile
+  `mongodb://${process.env.MONGODB_HOST}:27017/course-goals`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

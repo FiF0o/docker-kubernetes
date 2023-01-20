@@ -6,6 +6,7 @@ Playground for Docker & Kubernetes which will contain multiple projects.
 For app1 `.env` file is required before running the project - `mv env .env`.
 By default the development will be pointing to the local machine and docker network -`favorites-net`- will be created on post install for the containers to connect.
 A docker hub account and personal access token is required
+For frontend, backend contaiers, an `env/.backend.env` file is required, mongodb host will default to localhost (k8 setup), and current set will use mongodb value for local network development (please see `docker-compose.yml`).
 
 ## Deps
 

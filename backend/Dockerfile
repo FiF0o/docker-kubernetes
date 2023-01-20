@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+ENV MONGODB_HOST=localhost
+
 EXPOSE 80
 
 CMD [ "npm", "start" ]
