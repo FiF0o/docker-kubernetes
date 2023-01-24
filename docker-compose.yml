@@ -20,7 +20,7 @@ services:
     # uses image and creates img for us
     build: ./backend
     ports:
-      - '80:80' 
+      - '3001:3001'
     volumes:
       - logs:/app/logs
       - ./backend:/app

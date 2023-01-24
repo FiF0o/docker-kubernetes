@@ -4,6 +4,9 @@ import GoalInput from './components/goals/GoalInput';
 import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
 
+const BACKEND_URL = process.env.NODE_ENV === 'production' ? 'some/prod/url' : 'http://localhost:3001'
+console.log(process.env)
+
 function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +17,7 @@ function App() {
       setIsLoading(true);
 
       try {
-        const response = await fetch('http://localhost/goals');
+        const response = await fetch(`${BACKEND_URL}/goals`);
 
         const resData = await response.json();
 
@@ -40,7 +43,7 @@ function App() {
 
     try {
       // runs in browser, not executed in container, don't need the name container e.g goals-backend
-      const response = await fetch('http://localhost/goals', {
+      const response = await fetch(`${BACKEND_URL}/goals`, {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -80,7 +83,7 @@ function App() {
 
     try {
       // runs in browser, not executed in container, don't need the name container e.g goals-backend
-      const response = await fetch('http://localhost/goals/' + goalId, {
+      const response = await fetch(`${BACKEND_URL}/goals/` + goalId, {
         method: 'DELETE',
       });
 

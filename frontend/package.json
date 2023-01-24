@@ -18,7 +18,11 @@
     "eject": "react-scripts eject",
     "docker:build": "docker build -t goals-react .",
     "docker:start": "docker run --name goals-frontend -v $(pwd)/src:/app/src --rm -p 3000:3000 -d goals-react",
-    "docker:stop": "docker stop goals-frontend"
+    "docker:stop": "docker stop goals-frontend",
+    "docker:push": "docker push jonlazarini/goals-react",
+    "docker:pull": "docker image pull jonlazarini/goals-react",
+    "docker:build:prod": "docker build -f Dockerfile.prod -t jonlazarini/goals-react .",
+    "docker:run:prod": "docker run --name goals-frontend-prod --rm -p 80:80 -d jonlazarini/goals-react"
   },
   "eslintConfig": {
     "extends": [

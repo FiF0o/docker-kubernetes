@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 const Goal = require('./models/goal');
+console.log(process.env)
 
 const app = express();
 
@@ -84,7 +85,7 @@ app.delete('/goals/:id', async (req, res) => {
 });
 
 mongoose.connect(
-  // default to localhost when on same network with k8, see dockerfile
+  // default to localhost when on same network with k8, see dockerfile, otherwise uses cotnainer name
   `mongodb://${process.env.MONGODB_HOST}:27017/course-goals`,
   {
     useNewUrlParser: true,
@@ -96,7 +97,7 @@ mongoose.connect(
       console.error(err);
     } else {
       console.log('CONNECTED TO MONGODB!');
-      app.listen(80);
+      app.listen(3001);
     }
   }
 );

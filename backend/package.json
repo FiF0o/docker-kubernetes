@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "db:start": "docker run --name mongodb -v data:/data/db --rm -d --network goals-network mongo",
+    "db:start": "docker run --name mongodb -v data:/data/db --rm -d -p 27017:27017 --network goals-network mongo",
     "db:stop": "docker stop mongodb",
     "docker:build": "docker build -t goals-node .",
-    "docker:start": "docker run --env-file=../env/.backend.env --name goals-backend -v $(pwd):/app -v logs:/app/logs -v /app/node_modules -d --rm -p 80:80 --network goals-network goals-node",
+    "docker:start": "docker run --env-file=../env/.backend.env --name goals-backend -v $(pwd):/app -v logs:/app/logs -v /app/node_modules -d --rm -p 3001:3001 --network goals-network goals-node",
     "docker:stop": "docker stop goals-backend"
   },
   "author": "Maximilian Schwarzmüller / Academind GmbH",
