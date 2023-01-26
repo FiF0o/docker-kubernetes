@@ -12,7 +12,6 @@
     "docker:start": "docker run --env-file=../env/.backend.env --name goals-backend -v $(pwd):/app -v logs:/app/logs -v /app/node_modules -d --rm -p 3001:3001 --network goals-network goals-node",
     "docker:stop": "docker stop goals-backend"
   },
-  "author": "Maximilian Schwarzmüller / Academind GmbH",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",

@@ -15,7 +15,6 @@
     "docker:publish:push": "docker push jonlazarini/node-dep-example",
     "docker:publish": "npm run docker:login && npm run docker:build && npm run docker:publish:tag && npm run docker:publish:push"
   },
-  "author": "Maximilian Schwarzmüller / Academind GmbH",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
