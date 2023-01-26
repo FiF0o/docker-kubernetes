@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker build -t kub-first-app .",
+    "docker:tag": "docker tag kub-first-app jonlazarini/kub-first-app",
+    "docker:push": "docker push jonlazarini/kub-first-app",
+    "kube:start": "minikube start --driver=docker",
+    "kube:stop": "minikube stop",
+    "container:start": "kubectl create deployment first-app --image=jonlazarini/kub-first-app",
+    "dashboard": "minikube dashboard"
   },
   "license": "ISC",
   "dependencies": {
